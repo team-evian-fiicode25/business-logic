@@ -1,0 +1,39 @@
+# Go-related files
+*.exe
+*.out
+*.test
+*.log
+
+# Build artifacts
+/bin/
+/obj/
+/dist/
+/build/
+/tmp/
+*.o
+*.a
+*.so
+*.dll
+
+# Dependency directories
+/vendor/
+/go.sum
+/go.work.sum
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+*.bak
+
+# Genqlient-generated files
+internal/services/genqlient.go
+
+# Docker-related files (optional)
+.dockerignore
+docker-compose.override.yml
