@@ -31,7 +31,7 @@ func (h *ConsumerAuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	newConsumer, err := h.consumerService.CreateConsumer(context.Background(), request.Username, request.Email, request.Password)
+	newConsumer, err := h.consumerService.CreateConsumer(context.Background(), request.Username, request.Email, request.Phone_number, request.Password)
 	if err != nil {
 		response.Error = err.Error()
 		w.WriteHeader(http.StatusInternalServerError)
@@ -40,6 +40,7 @@ func (h *ConsumerAuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response = models.AuthResponse{
+		Id:         newConsumer.NewLogin.GetId(),
 		Session_id: newConsumer.NewLogin.GetId(),
 	}
 
@@ -71,6 +72,7 @@ func (h *ConsumerAuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response = models.AuthResponse{
+		Id:         loginSession.LoginSession.GetId(),
 		Session_id: loginSession.LoginSession.GetIdentifyingToken(),
 	}
 

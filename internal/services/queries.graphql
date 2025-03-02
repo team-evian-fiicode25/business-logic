@@ -46,8 +46,8 @@ mutation CreateLogin($username: String, $email: String, $phoneNumber: String, $p
   }
 }
 
-mutation LogInWithPassword($username: String!, $password: String!) {
-  loginSession: logInWithPassword(username: $username, password: $password) {
+mutation LogInWithPassword($email: String, $username: String, $password: String!) {
+  loginSession: logInWithPassword(email: $email, username: $username, password: $password) {
     id
     identifyingToken
     isSolved
