@@ -24,9 +24,7 @@ interface IQueryableLoginSession {
   timeLeftSeconds: Int!
   available2FAOptions: [TwoFactorMean!]!
   solved2FAOptions: [TwoFactorMean!]!
-  # genqlient: ignoreDirectives=["cost"]
   loginId: String!
-
   login: IQueryableLogin!
   isSolved: Boolean!
   createdAt: String!
@@ -39,14 +37,36 @@ interface IQueryablePhoneNumber {
 }
 
 type Mutation {
-  createLogin(username: String email: String phoneNumber: String password: String!): IQueryableLogin!
-  removeLogin(id: String!): IQueryableLogin
-  logInWithPassword(username: String! password: String!): IQueryableLoginSession!
+  createLogin(
+    username: String
+    email: String
+    phoneNumber: String
+    password: String!
+  ): IQueryableLogin!
+  removeLogin(
+    id: String
+    username: String
+    email: String
+    phone: String
+  ): IQueryableLogin
+  logInWithPassword(
+    id: String
+    username: String
+    email: String
+    phone: String
+    password: String!
+  ): IQueryableLoginSession!
 }
 
 type Query {
   logins: [IQueryableLogin!]!
-  login(username: String!): IQueryableLogin
+  login(
+    id: String
+    username: String
+    email: String
+    phone: String
+  ): IQueryableLogin
+  loginSession(token: String!): IQueryableLoginSession
 }
 
 type QueryableEmail implements IQueryableEmail {
