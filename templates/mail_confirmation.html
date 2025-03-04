@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Email Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .code {
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #eee;
+            padding: 10px;
+            text-align: center;
+            letter-spacing: 5px;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verify Your Email Address</h1>
+        
+        <p>Hello {{.Username}},</p>
+        
+        <p>Thank you for creating an account. To complete your registration, please verify your email address by clicking the button below:</p>
+        
+        <div style="text-align: center;">
+            <a href="{{.BaseURL}}{{.VerifyEndpoint}}?token={{.Token}}" class="btn">Verify Email</a>
+        </div>
+        
+        <p>Alternatively, you can enter this verification code manually:</p>
+        
+        <div class="code">{{.Code}}</div>
+        
+        <p>This code will expire in {{.ExpiresInMin}} minutes.</p>
+        
+        <p>If you didn't create an account, you can safely ignore this email.</p>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2025 Transportly. All rights reserved.</p>
+        <p>This is an automated email. Please do not reply to this message.</p>
+    </div>
+</body>
+</html>
