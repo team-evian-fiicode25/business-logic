@@ -4,6 +4,9 @@
 *.test
 *.log
 
+# Environment variables file
+.env
+
 # Build artifacts
 /bin/
 /obj/
