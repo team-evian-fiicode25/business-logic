@@ -6,6 +6,7 @@ type AuthRequest struct {
 	Password     string `json:"password"`
 	Phone_number string `json:"phone_number"`
 	Nickname     string `json:"nickname"`
+	Identifier   string `json:"identifier"`
 }
 
 type AuthResponse struct {
