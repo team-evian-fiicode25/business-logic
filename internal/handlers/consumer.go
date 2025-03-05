@@ -62,7 +62,7 @@ func (h *ConsumerAuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	loginSession, err := h.consumerService.LogInWithPassword(context.Background(), request.Username, request.Password)
+	loginSession, err := h.consumerService.LogInWithPassword(context.Background(), request.Identifier, request.Password)
 	if err != nil {
 		response.Error = err.Error()
 
