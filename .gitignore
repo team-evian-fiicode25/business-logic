@@ -31,9 +31,6 @@
 Thumbs.db
 *.bak
 
-# Genqlient-generated files
-internal/services/genqlient.go
-
 # Docker-related files (optional)
 .dockerignore
 docker-compose.override.yml
