@@ -8,19 +8,19 @@ import (
 )
 
 func Create(authData *data.AuthData) (*data.User, error) {
-    if authData == nil {
-        return nil, fmt.Errorf("Receieved nil reference to argument (authData)")
-    }
+	if authData == nil {
+		return nil, fmt.Errorf("Receieved nil reference to argument (authData)")
+	}
 
-    user := &data.User{AuthData: *authData}
+	user := &data.User{AuthData: *authData}
 
-    db := database.GetDB()
+	db := database.GetDB()
 
-    err := db.Create(&user).Error
+	err := db.Create(&user).Error
 
-    if err != nil {
-        return nil, err
-    }
+	if err != nil {
+		return nil, err
+	}
 
-    return user, nil
+	return user, nil
 }

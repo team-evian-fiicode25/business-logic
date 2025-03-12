@@ -11,23 +11,23 @@ import (
 )
 
 func main() {
-    err := database.InitDBFromEnv();
+	err := database.InitDBFromEnv()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-    var db *gorm.DB = database.GetDB()
+	var db *gorm.DB = database.GetDB()
 
-    collections := [...]any{&data.User{}}
+	collections := [...]any{&data.User{}}
 
-    for _, collection := range collections {
-        err := db.AutoMigrate(collection)
-        
-        if err != nil {
-            log.Fatal(err)
-        }
-    }
+	for _, collection := range collections {
+		err := db.AutoMigrate(collection)
 
-    fmt.Println("Completed successfully")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	fmt.Println("Completed successfully")
 }
