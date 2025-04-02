@@ -12,11 +12,11 @@ import (
 )
 
 func main() {
-    dsn := os.Getenv("POSTGRES_CONNECTION");
+	dsn := os.Getenv("POSTGRES_CONNECTION")
 
-    if dsn == ""{
-        log.Fatalln("Missing env variable: POSTGRES_CONNECTION")
-    }
+	if dsn == "" {
+		log.Fatalln("Missing env variable: POSTGRES_CONNECTION")
+	}
 
 	err := database.InitDB(dsn)
 
