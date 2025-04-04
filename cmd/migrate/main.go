@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/team-evian-fiicode25/business-logic/data"
 	"github.com/team-evian-fiicode25/business-logic/database"
@@ -11,7 +12,13 @@ import (
 )
 
 func main() {
-	err := database.InitDBFromEnv()
+	dsn := os.Getenv("POSTGRES_CONNECTION")
+
+	if dsn == "" {
+		log.Fatalln("Missing env variable: POSTGRES_CONNECTION")
+	}
+
+	err := database.InitDB(dsn)
 
 	if err != nil {
 		log.Fatal(err)
