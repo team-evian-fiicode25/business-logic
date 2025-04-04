@@ -26,7 +26,24 @@ func main() {
 
 	var db *gorm.DB = database.GetDB()
 
-	collections := [...]any{&data.User{}}
+	if err := db.Exec("CREATE EXTENSION IF NOT EXISTS postgis").Error; err != nil {
+		log.Fatalf("Failed to create PostGIS extension: %v", err)
+	}
+
+	collections := [...]any{
+		&data.CitizenProfile{},
+		&data.AuthorityAdmin{},
+		&data.Route{},
+		&data.RouteNode{},
+		&data.Achievement{},
+		&data.CitizenAchievement{},
+		&data.Notification{},
+		&data.Suggestion{},
+		&data.TrafficIncident{},
+		&data.Partner{},
+		&data.TransportDataSource{},
+		&data.CitizenShortcut{},
+	}
 
 	for _, collection := range collections {
 		err := db.AutoMigrate(collection)
