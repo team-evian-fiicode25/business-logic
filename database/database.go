@@ -1,9 +1,6 @@
 package database
 
 import (
-	"fmt"
-	"os"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -23,14 +20,4 @@ func InitDB(dsn string) error {
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	return err
-}
-
-func InitDBFromEnv() error {
-	dsn := os.Getenv("POSTGRES_CONNECTION")
-
-	if dsn == "" {
-		return fmt.Errorf("missing environment variable: POSTGRES_CONNECTION")
-	}
-
-	return InitDB(dsn)
 }
