@@ -8,3 +8,6 @@ the single 'POSTGRES_CONNECTION' variable
 
 # v0.2.0
 Reworked entire project
+
+# v0.2.1
+Implement incident system
