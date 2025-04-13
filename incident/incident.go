@@ -18,8 +18,9 @@ type LatLng struct {
 }
 
 func ReportTrafficIncident(userID, locationWKT, description, incidentType string) (*data.TrafficIncident, error) {
-	if userID == "" {
-		userID = uuid.NewString()
+	var reportedBy *string
+	if userID != "" {
+		reportedBy = &userID
 	}
 
 	locationJSON, err := json.Marshal(locationWKT)
@@ -29,7 +30,7 @@ func ReportTrafficIncident(userID, locationWKT, description, incidentType string
 
 	incident := &data.TrafficIncident{
 		IncidentID:   uuid.New().String(),
-		ReportedBy:   userID,
+		ReportedBy:   reportedBy,
 		Location:     datatypes.JSON(locationJSON),
 		Description:  description,
 		IncidentType: incidentType,

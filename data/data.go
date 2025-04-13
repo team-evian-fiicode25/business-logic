@@ -107,8 +107,8 @@ type Suggestion struct {
 }
 
 type TrafficIncident struct {
-	IncidentID   string         `gorm:"type:uuid;primaryKey"`
-	ReportedBy   string         `gorm:"type:uuid"`
+	IncidentID   string         `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	ReportedBy   *string        `gorm:"type:uuid"`
 	Location     datatypes.JSON `gorm:"type:jsonb"`
 	Description  string
 	IncidentType string    `gorm:"not null;check:incident_type IN ('Accident', 'Roadblock', 'BadWeather', 'Hazard', 'Traffic', 'Other')"`
@@ -116,7 +116,7 @@ type TrafficIncident struct {
 	CreatedAt    time.Time `gorm:"autoCreateTime"`
 	UpdatedAt    time.Time `gorm:"autoUpdateTime"`
 
-	Citizen CitizenProfile `gorm:"foreignKey:ReportedBy;references:UserID;constraint:OnDelete:CASCADE;belongsTo:CitizenProfile"`
+	Citizen *CitizenProfile `gorm:"foreignKey:ReportedBy;references:UserID;constraint:OnDelete:CASCADE;"`
 }
 
 type Partner struct {
