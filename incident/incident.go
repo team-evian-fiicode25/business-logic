@@ -17,6 +17,17 @@ type LatLng struct {
 	Lng float64 `json:"longitude"`
 }
 
+func pointsToLineString(points []LatLng) string {
+	if len(points) == 0 {
+		return "LINESTRING EMPTY"
+	}
+	coords := make([]string, len(points))
+	for i, p := range points {
+		coords[i] = fmt.Sprintf("%f %f", p.Lng, p.Lat)
+	}
+	return "LINESTRING(" + strings.Join(coords, ", ") + ")"
+}
+
 func ReportTrafficIncident(userID, locationWKT, description, incidentType string) (*data.TrafficIncident, error) {
 	var reportedBy *string
 	if userID != "" {
@@ -45,17 +56,6 @@ func ReportTrafficIncident(userID, locationWKT, description, incidentType string
 	return incident, nil
 }
 
-func pointsToLineString(points []LatLng) string {
-	if len(points) == 0 {
-		return "LINESTRING EMPTY"
-	}
-	coords := make([]string, 0, len(points))
-	for _, p := range points {
-		coords = append(coords, fmt.Sprintf("%f %f", p.Lng, p.Lat))
-	}
-	return "LINESTRING(" + strings.Join(coords, ", ") + ")"
-}
-
 func GetOpenTrafficIncidentsByRoute(points []LatLng, tolerance float64) ([]data.TrafficIncident, error) {
 	db := database.GetDB()
 	var incidents []data.TrafficIncident
@@ -68,15 +68,14 @@ func GetOpenTrafficIncidentsByRoute(points []LatLng, tolerance float64) ([]data.
 	query := `
 		SELECT *
 		FROM traffic_incidents
-		WHERE status = ?
+		WHERE status = 'Open'
 		  AND ST_DWithin(
 		      ST_GeomFromText(location::jsonb #>> '{}', 4326),
 		      ST_GeomFromText(?, 4326),
 		      ?
 		  )
 	`
-
-	if err := db.Raw(query, "Open", lineStringWKT, tolerance).Scan(&incidents).Error; err != nil && err != gorm.ErrRecordNotFound {
+	if err := db.Raw(query, lineStringWKT, tolerance).Scan(&incidents).Error; err != nil && err != gorm.ErrRecordNotFound {
 		return nil, fmt.Errorf("error fetching incidents: %w", err)
 	}
 
