@@ -1,4 +1,4 @@
-package user
+package incident
 
 import (
 	"encoding/json"
