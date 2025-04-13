@@ -66,15 +66,15 @@ func GetOpenTrafficIncidentsByRoute(points []LatLng, tolerance float64) ([]data.
 	}
 
 	query := `
-		SELECT *
-		FROM traffic_incidents
-		WHERE status = 'Open'
-		  AND ST_DWithin(
-		      ST_GeomFromText(location::jsonb #>> '{}', 4326),
-		      ST_GeomFromText(?, 4326),
-		      ?
-		  )
-	`
+        SELECT *
+        FROM traffic_incidents
+        WHERE status = 'Open'
+          AND ST_DWithin(
+              ST_GeomFromText(location #>> '{}')::geography,
+              ST_GeomFromText(?)::geography,
+              ?
+          )
+    `
 	if err := db.Raw(query, lineStringWKT, tolerance).Scan(&incidents).Error; err != nil && err != gorm.ErrRecordNotFound {
 		return nil, fmt.Errorf("error fetching incidents: %w", err)
 	}
