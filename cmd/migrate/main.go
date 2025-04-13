@@ -5,22 +5,23 @@ import (
 	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/team-evian-fiicode25/business-logic/data"
 	"github.com/team-evian-fiicode25/business-logic/database"
-
 	"gorm.io/gorm"
 )
 
 func main() {
-	dsn := os.Getenv("POSTGRES_CONNECTION")
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using system environment variables")
+	}
 
+	dsn := os.Getenv("POSTGRES_CONNECTION")
 	if dsn == "" {
 		log.Fatalln("Missing env variable: POSTGRES_CONNECTION")
 	}
 
-	err := database.InitDB(dsn)
-
-	if err != nil {
+	if err := database.InitDB(dsn); err != nil {
 		log.Fatal(err)
 	}
 
@@ -46,9 +47,7 @@ func main() {
 	}
 
 	for _, collection := range collections {
-		err := db.AutoMigrate(collection)
-
-		if err != nil {
+		if err := db.AutoMigrate(collection); err != nil {
 			log.Fatal(err)
 		}
 	}
