@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/team-evian-fiicode25/business-logic/data"
 	"github.com/team-evian-fiicode25/business-logic/database"
 	"gorm.io/datatypes"
@@ -18,7 +19,7 @@ type LatLng struct {
 
 func ReportTrafficIncident(userID, locationWKT, description, incidentType string) (*data.TrafficIncident, error) {
 	if userID == "" {
-		userID = "Unknown"
+		userID = uuid.NewString()
 	}
 
 	locationJSON, err := json.Marshal(locationWKT)
@@ -27,7 +28,7 @@ func ReportTrafficIncident(userID, locationWKT, description, incidentType string
 	}
 
 	incident := &data.TrafficIncident{
-		IncidentID:   "",
+		IncidentID:   uuid.New().String(),
 		ReportedBy:   userID,
 		Location:     datatypes.JSON(locationJSON),
 		Description:  description,
