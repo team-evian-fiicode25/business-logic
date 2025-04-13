@@ -49,7 +49,6 @@ func pointsToLineString(points []LatLng) string {
 	if len(points) == 0 {
 		return "LINESTRING EMPTY"
 	}
-
 	coords := make([]string, 0, len(points))
 	for _, p := range points {
 		coords = append(coords, fmt.Sprintf("%f %f", p.Lng, p.Lat))
@@ -71,7 +70,7 @@ func GetOpenTrafficIncidentsByRoute(points []LatLng, tolerance float64) ([]data.
 		FROM traffic_incidents
 		WHERE status = ?
 		  AND ST_DWithin(
-		      location::geometry,
+		      ST_GeomFromText(TRIM(BOTH '"' FROM location::text), 4326),
 		      ST_GeomFromText(?, 4326),
 		      ?
 		  )
