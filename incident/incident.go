@@ -70,7 +70,7 @@ func GetOpenTrafficIncidentsByRoute(points []LatLng, tolerance float64) ([]data.
 		FROM traffic_incidents
 		WHERE status = ?
 		  AND ST_DWithin(
-		      ST_GeomFromText(TRIM(BOTH '"' FROM location::text), 4326),
+		      ST_GeomFromText(location::jsonb #>> '{}', 4326),
 		      ST_GeomFromText(?, 4326),
 		      ?
 		  )
