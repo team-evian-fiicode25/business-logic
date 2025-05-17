@@ -11,3 +11,6 @@ Reworked entire project
 
 # v0.3.1
 Add database diagram
+
+# v0.3.2
+Update traffic incidents allowed types
