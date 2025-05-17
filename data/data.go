@@ -111,7 +111,7 @@ type TrafficIncident struct {
 	ReportedBy   *string        `gorm:"type:uuid"`
 	Location     datatypes.JSON `gorm:"type:jsonb"`
 	Description  string
-	IncidentType string    `gorm:"not null;check:incident_type IN ('Accident', 'Roadblock', 'BadWeather', 'Hazard', 'Traffic', 'Other')"`
+	IncidentType string    `gorm:"not null;check:incident_type IN ('Accident', 'Roadblock', 'BadWeather', 'Hazard', 'Traffic', 'Other', 'Noise')"`
 	Status       string    `gorm:"not null;check:status IN ('Open', 'Resolved', 'Closed')"`
 	CreatedAt    time.Time `gorm:"autoCreateTime"`
 	UpdatedAt    time.Time `gorm:"autoUpdateTime"`
